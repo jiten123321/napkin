@@ -184,9 +184,14 @@
     mix-blend-mode:overlay;opacity:.62;pointer-events:none}
   .napkin::after{content:"";position:absolute;inset:0;pointer-events:none;
     background:
-      radial-gradient(120% 90% at 46% 38%, rgba(255,210,150,.18), rgba(0,0,0,0) 60%),
-      linear-gradient(102deg, transparent 28%, rgba(110,86,52,.10) 32%, transparent 36%),
-      linear-gradient(84deg, transparent 64%, rgba(110,86,52,.08) 67%, transparent 70%)}
+      radial-gradient(120% 90% at 46% 36%, rgba(255,214,158,.12), rgba(0,0,0,0) 62%),
+      conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,.05) 0 90deg, rgba(0,0,0,.05) 90deg 180deg, rgba(255,255,255,.03) 180deg 270deg, rgba(0,0,0,.055) 270deg 360deg),
+      linear-gradient(90deg, transparent 46%, rgba(110,86,52,.10) 49%, rgba(82,60,34,.18) 50%, rgba(110,86,52,.10) 51%, rgba(255,250,240,.18) 52.5%, transparent 56%),
+      linear-gradient(180deg, transparent 44%, rgba(110,86,52,.09) 48.5%, rgba(82,60,34,.16) 50%, rgba(110,86,52,.09) 51.5%, rgba(255,250,240,.15) 53%, transparent 57%),
+      linear-gradient(90deg, transparent 22%, rgba(82,60,34,.07) 25%, rgba(255,250,240,.08) 26.5%, transparent 29%),
+      linear-gradient(90deg, transparent 71%, rgba(82,60,34,.07) 75%, rgba(255,250,240,.08) 76.5%, transparent 79%),
+      linear-gradient(180deg, transparent 22%, rgba(82,60,34,.06) 25%, rgba(255,250,240,.07) 26.5%, transparent 29%),
+      linear-gradient(180deg, transparent 71%, rgba(82,60,34,.06) 75%, rgba(255,250,240,.07) 76.5%, transparent 79%)}
   /* coffee ring printed on the napkin (lower-right, like the reference) */
   .napkin-ring{position:absolute;right:9%;bottom:11%;width:34%;height:34%;border-radius:50%;
     border:6px solid rgba(120,76,38,.42);
