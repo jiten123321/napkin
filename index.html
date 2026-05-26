@@ -301,7 +301,30 @@
   #replay.show{opacity:.7;pointer-events:auto}
   #replay:hover{opacity:1}
 
-  @media (max-width:600px){.stage-fit{width:98vw;height:98vw}.w-line{max-width:26ch}.napkin-stack{width:62%;height:80%}}
+  @media (max-width:600px){
+    .stage-fit{width:98vw;height:98vw}
+    .w-line{max-width:26ch}
+    .napkin-stack{width:62%;height:80%}
+    .w-logo{width:clamp(150px,46vmin,210px)}
+    #welcome{gap:.65rem;padding:1.2rem}
+    .open-btn{padding:.85em 1.8em}
+    .letter{top:11%;width:94%;line-height:1.2}
+    .line{white-space:normal}
+    .nib{display:none}
+    .l-greet{font-size:1.35rem;font-weight:600}
+    .l-body{font-size:.98rem}
+    .l-sign{font-size:.92rem}
+    .letter .gap{height:5px}
+    #sound{right:12px;bottom:12px;width:40px;height:40px}
+    #replay{left:12px;bottom:14px;font-size:.7rem}
+  }
+  @media (max-height:560px) and (max-width:600px){
+    .letter{top:7%;line-height:1.15}
+    .l-greet{font-size:1.15rem}
+    .l-body{font-size:.88rem}
+    .l-sign{font-size:.84rem}
+    .letter .gap{height:3px}
+  }
   @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important}}
 </style>
 </head>
@@ -481,6 +504,12 @@
 </div>
 <div id="replay">↺ read again</div>
 
+<!-- background song -->
+<audio id="bgsong" preload="auto" loop playsinline>
+  <source src="https://cdn.jsdelivr.net/gh/jiten123321/song@main/Until_I_Found_You.mp3" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/jiten123321/song/main/Until_I_Found_You.mp3" type="audio/mpeg">
+</audio>
+
 <!-- ===================== WELCOME ===================== -->
 <div id="welcome">
   <div class="w-mark">
@@ -500,9 +529,9 @@
 
   /* ---------- LETTER ---------- */
   const letterLines = [
-    {t:"Maybe one day,", c:"l-greet", g:true},
-    {t:"after all the healing, fears,", c:"l-body"},
-    {t:"and imperfect parts of us are accepted,", c:"l-body"},
+    {t:"Hey Ladoo,", c:"l-greet", g:true},
+    {t:"Maybe one day, after all the healing,", c:"l-body"},
+    {t:"fears, and imperfect parts of us are accepted,", c:"l-body"},
     {t:"we’ll sit together in a cozy café", c:"l-body"},
     {t:"near a rainy window ☕❤️", c:"l-body", g:true},
     {t:"Not trying to fix each other.", c:"l-body"},
@@ -514,12 +543,12 @@
     {t:"And today, I want to give you", c:"l-body"},
     {t:"something important — the power.", c:"l-body"},
     {t:"The power to heal slowly, choose freely,", c:"l-body"},
-    {t:"and love only when your heart feels safe.", c:"l-body", g:true},
+    {t:"and love only when your heart truly feels safe.", c:"l-body", g:true},
     {t:"Because love should never feel like pressure.", c:"l-body"},
     {t:"It should feel like peace.", c:"l-body", g:true},
     {t:"So until that little café date becomes real…", c:"l-body"},
-    {t:"I’ll keep manifesting warm coffee,", c:"l-sign"},
-    {t:"soft music, and us choosing each other.", c:"l-sign", heart:true},
+    {t:"I’ll keep manifesting warm coffee, soft music,", c:"l-sign"},
+    {t:"and us choosing each other naturally.", c:"l-sign", heart:true},
   ];
 
   const letterEl = document.getElementById('letter');
@@ -596,8 +625,10 @@
       else l.style.transform='translate('+mx+'px,'+my+'px) scale(1.06)';});
     requestAnimationFrame(loop);})();
 
-  /* ---------- AMBIENCE (procedural, no copyrighted audio) ---------- */
-  let actx=null,master=null,audioOn=false,padTimer=null;
+  /* ---------- AMBIENCE (rain + wind) + song ---------- */
+  let actx=null,master=null,audioOn=false;
+  const bgsong=document.getElementById('bgsong');
+  bgsong.volume=0;
   function initAudio(){
     if(actx)return;const AC=window.AudioContext||window.webkitAudioContext;actx=new AC();
     master=actx.createGain();master.gain.value=0;master.connect(actx.destination);
@@ -605,26 +636,22 @@
     for(let i=0;i<n;i++)dt[i]=(Math.random()*2-1)*0.5;
     const rain=actx.createBufferSource();rain.buffer=buf;rain.loop=true;
     const lp=actx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=850;
-    const rg=actx.createGain();rg.gain.value=0.06;rain.connect(lp);lp.connect(rg);rg.connect(master);rain.start();
+    const rg=actx.createGain();rg.gain.value=0.03;rain.connect(lp);lp.connect(rg);rg.connect(master);rain.start();
     // gusting wind: same noise through a sweeping bandpass
     const wind=actx.createBufferSource();wind.buffer=buf;wind.loop=true;
     const bp=actx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=480;bp.Q.value=0.7;
-    const wg=actx.createGain();wg.gain.value=0.02;wind.connect(bp);bp.connect(wg);wg.connect(master);wind.start();
+    const wg=actx.createGain();wg.gain.value=0.012;wind.connect(bp);bp.connect(wg);wg.connect(master);wind.start();
     setInterval(()=>{if(!actx||!audioOn)return;const t=actx.currentTime,d=2+Math.random()*3;
-      wg.gain.cancelScheduledValues(t);wg.gain.setTargetAtTime(0.02+Math.random()*0.07,t,0.5);
-      wg.gain.setTargetAtTime(0.02,t+d,0.8);
+      wg.gain.cancelScheduledValues(t);wg.gain.setTargetAtTime(0.012+Math.random()*0.04,t,0.5);
+      wg.gain.setTargetAtTime(0.012,t+d,0.8);
       bp.frequency.cancelScheduledValues(t);bp.frequency.setTargetAtTime(380+Math.random()*420,t,0.6);},3800);
-    const scale=[261.63,293.66,329.63,392.0,440.0,523.25,587.33];
-    function note(){if(!actx)return;const f=scale[(Math.random()*scale.length)|0]*(Math.random()<0.3?0.5:1);
-      const o=actx.createOscillator();o.type='triangle';o.frequency.value=f;
-      const o2=actx.createOscillator();o2.type='sine';o2.frequency.value=f*2.005;
-      const g=actx.createGain();g.gain.value=0;const f2=actx.createBiquadFilter();f2.type='lowpass';f2.frequency.value=1600;
-      o.connect(g);o2.connect(g);g.connect(f2);f2.connect(master);const t=actx.currentTime;
-      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.1,t+0.04);g.gain.exponentialRampToValueAtTime(0.0008,t+2.6);
-      o.start(t);o2.start(t);o.stop(t+2.7);o2.stop(t+2.7);}
-    padTimer=setInterval(()=>{if(audioOn&&Math.random()<0.75)note();},1700);note();
   }
   function fadeMaster(v){if(master){master.gain.cancelScheduledValues(actx.currentTime);master.gain.setTargetAtTime(v,actx.currentTime,0.6);}}
+  function fadeSong(target){
+    const start=bgsong.volume,t0=performance.now(),dur=900;
+    function step(t){const k=Math.min(1,(t-t0)/dur);bgsong.volume=start+(target-start)*k;if(k<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  }
   function tick(){if(!actx||!audioOn)return;const o=actx.createOscillator();o.type='sine';o.frequency.value=2400+Math.random()*400;
     const g=actx.createGain();g.gain.value=0;o.connect(g);g.connect(master);const t=actx.currentTime;
     g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.02,t+0.005);g.gain.exponentialRampToValueAtTime(0.0005,t+0.12);o.start(t);o.stop(t+0.13);}
@@ -632,8 +659,10 @@
   const soundBtn=document.getElementById('sound'),soundIcon=document.getElementById('soundIcon');
   function setAudio(on){audioOn=on;
     if(on){initAudio();if(actx.state==='suspended')actx.resume();fadeMaster(0.9);
+      const p=bgsong.play();if(p&&p.catch)p.catch(()=>{});fadeSong(0.85);
       soundIcon.innerHTML='<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a4 4 0 0 1 0 7"/><path d="M18.5 6a7 7 0 0 1 0 12"/>';}
-    else{fadeMaster(0);soundIcon.innerHTML='<path d="M4 9v6h4l5 4V5L8 9H4z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/>';}}
+    else{fadeMaster(0);fadeSong(0);setTimeout(()=>{try{bgsong.pause();}catch(e){}},950);
+      soundIcon.innerHTML='<path d="M4 9v6h4l5 4V5L8 9H4z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/>';}}
   soundBtn.addEventListener('click',()=>setAudio(!audioOn));
 
   /* ---------- OPEN FLOW ---------- */
