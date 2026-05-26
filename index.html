@@ -364,23 +364,23 @@
   #replay:hover{opacity:1}
 
   @media (max-width:600px){
-    .stage-fit{width:98vw;height:98vw}
+    /* Mobile: dedicate the screen to the letter — hide side props */
+    .stage-fit{width:96vw;height:92vh;max-width:560px}
+    .mug-wrap,.plate,.brownie,.crumb,.sprig,.pen,.ipod,.ring-stain{display:none}
     .w-line{max-width:26ch}
-    .napkin-stack{width:72%;height:82%}
+    .napkin-stack{width:94%;height:94%}
+    .logo{width:20%;top:4%}
+    .napkin-ring{display:none}
     .w-logo{width:clamp(150px,46vmin,210px)}
     #welcome{gap:.65rem;padding:1.2rem}
     .open-btn{padding:.85em 1.8em}
-    .letter{top:22%;width:94%;line-height:1.18}
+    .letter{top:10%;width:92%;line-height:1.2}
     .line{white-space:normal}
     .nib{display:none}
-    .l-greet{font-size:1.05rem;font-weight:600}
-    .l-body{font-size:.82rem}
-    .l-sign{font-size:.78rem}
-    .letter .gap{height:3px}
-    .ipod{left:88%;top:93%;width:22%;height:22%;
-      transform:translate(-50%,-50%) rotate(-8deg)}
-    .ipod-title{font-size:.55em}
-    .ipod-artist{font-size:.45em}
+    .l-greet{font-size:clamp(1.25rem,5.2vmin,1.65rem);font-weight:600}
+    .l-body{font-size:clamp(.95rem,4.4vmin,1.15rem)}
+    .l-sign{font-size:clamp(.9rem,4.2vmin,1.1rem)}
+    .letter .gap{height:clamp(4px,1.4vmin,8px)}
     #sound{right:12px;bottom:12px;width:40px;height:40px}
     #replay{left:12px;bottom:14px;font-size:.7rem}
   }
@@ -424,60 +424,95 @@
 
     <!-- props -->
     <div class="layer" data-depth="15" style="width:100%;height:100%">
-      <!-- dried roses -->
+      <!-- orchid bouquet -->
       <svg class="sprig" viewBox="0 0 160 200" fill="none">
         <defs>
-          <radialGradient id="roseG" cx="42%" cy="38%" r="62%">
-            <stop offset="0" stop-color="#bb868b"/><stop offset=".5" stop-color="#945a60"/>
-            <stop offset="1" stop-color="#5e383c"/>
+          <radialGradient id="orcOuter" cx="50%" cy="40%" r="65%">
+            <stop offset="0" stop-color="#fdeef4"/>
+            <stop offset=".55" stop-color="#d9a8c6"/>
+            <stop offset="1" stop-color="#8c5b80"/>
           </radialGradient>
-          <radialGradient id="roseG2" cx="44%" cy="40%" r="60%">
-            <stop offset="0" stop-color="#c89498"/><stop offset="1" stop-color="#7a4a4f"/>
+          <radialGradient id="orcInner" cx="50%" cy="42%" r="60%">
+            <stop offset="0" stop-color="#fff6fb"/>
+            <stop offset=".5" stop-color="#e6b9d6"/>
+            <stop offset="1" stop-color="#9a6d8e"/>
           </radialGradient>
-          <linearGradient id="leafG" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#8a8559"/><stop offset="1" stop-color="#56522f"/>
+          <radialGradient id="orcLip" cx="50%" cy="40%" r="65%">
+            <stop offset="0" stop-color="#ffe1c0"/>
+            <stop offset=".55" stop-color="#cf8e5e"/>
+            <stop offset="1" stop-color="#6a3f24"/>
+          </radialGradient>
+          <linearGradient id="orcStem" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#7d8a4a"/>
+            <stop offset="1" stop-color="#3e4524"/>
           </linearGradient>
-          <g id="rose">
-            <g fill="url(#roseG)" stroke="#4f2e31" stroke-width=".5">
-              <path d="M0 3 C -10 -3 -12 -18 0 -23 C 12 -18 10 -3 0 3 Z"/>
-              <path d="M0 3 C -10 -3 -12 -18 0 -23 C 12 -18 10 -3 0 3 Z" transform="rotate(72)"/>
-              <path d="M0 3 C -10 -3 -12 -18 0 -23 C 12 -18 10 -3 0 3 Z" transform="rotate(144)"/>
-              <path d="M0 3 C -10 -3 -12 -18 0 -23 C 12 -18 10 -3 0 3 Z" transform="rotate(216)"/>
-              <path d="M0 3 C -10 -3 -12 -18 0 -23 C 12 -18 10 -3 0 3 Z" transform="rotate(288)"/>
+          <linearGradient id="orcLeaf" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#5a7340"/>
+            <stop offset="1" stop-color="#2f3d20"/>
+          </linearGradient>
+          <radialGradient id="orcThroat" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#ffe79a"/>
+            <stop offset=".7" stop-color="#c98a3a"/>
+            <stop offset="1" stop-color="#6b3f1c"/>
+          </radialGradient>
+
+          <!-- single orchid bloom -->
+          <g id="orchid">
+            <!-- outer 3 sepals (top + 2 sides) -->
+            <g stroke="#7a4868" stroke-width=".55">
+              <ellipse cx="0" cy="-12" rx="6.2" ry="11" fill="url(#orcOuter)"/>
+              <g transform="rotate(-130)"><ellipse cx="0" cy="-12" rx="5.8" ry="10.5" fill="url(#orcOuter)"/></g>
+              <g transform="rotate(130)"><ellipse cx="0" cy="-12" rx="5.8" ry="10.5" fill="url(#orcOuter)"/></g>
             </g>
-            <g fill="url(#roseG2)" stroke="#4f2e31" stroke-width=".4">
-              <path d="M0 2 C -7 -2 -8 -12 0 -15 C 8 -12 7 -2 0 2 Z" transform="rotate(36)"/>
-              <path d="M0 2 C -7 -2 -8 -12 0 -15 C 8 -12 7 -2 0 2 Z" transform="rotate(108)"/>
-              <path d="M0 2 C -7 -2 -8 -12 0 -15 C 8 -12 7 -2 0 2 Z" transform="rotate(180)"/>
-              <path d="M0 2 C -7 -2 -8 -12 0 -15 C 8 -12 7 -2 0 2 Z" transform="rotate(252)"/>
-              <path d="M0 2 C -7 -2 -8 -12 0 -15 C 8 -12 7 -2 0 2 Z" transform="rotate(324)"/>
+            <!-- inner 2 lateral petals -->
+            <g stroke="#7a4868" stroke-width=".5" opacity=".97">
+              <g transform="rotate(-55)"><ellipse cx="0" cy="-10" rx="5" ry="9" fill="url(#orcInner)"/></g>
+              <g transform="rotate(55)"><ellipse cx="0" cy="-10" rx="5" ry="9" fill="url(#orcInner)"/></g>
             </g>
-            <path d="M-4 -2 C -2 -8 4 -8 5 -2 C 3 2 -2 2 -4 -2 Z" fill="#6e4146"/>
-            <circle r="1.8" fill="#4f2e31"/>
+            <!-- labellum (lip) -->
+            <path d="M-6 3 Q-9 14 0 17 Q9 14 6 3 Q3 1 0 1 Q-3 1 -6 3 Z" fill="url(#orcLip)" stroke="#5a3818" stroke-width=".55"/>
+            <path d="M-3 10 Q0 13 3 10" stroke="#5a3818" stroke-width=".5" fill="none" opacity=".7"/>
+            <!-- column / throat -->
+            <ellipse cx="0" cy="0" rx="2.6" ry="3.4" fill="url(#orcThroat)"/>
+            <!-- tiny spots on lip -->
+            <circle cx="-2" cy="7" r=".7" fill="#5a3818" opacity=".55"/>
+            <circle cx="2" cy="8" r=".6" fill="#5a3818" opacity=".55"/>
+            <circle cx="0" cy="11" r=".5" fill="#5a3818" opacity=".5"/>
+          </g>
+
+          <!-- small bud -->
+          <g id="orcBud">
+            <path d="M0 6 C -5 2 -5 -10 0 -13 C 5 -10 5 2 0 6 Z" fill="url(#orcInner)" stroke="#7a4868" stroke-width=".5"/>
+            <path d="M-4 4 Q0 0 4 4" stroke="#7a4868" stroke-width=".4" fill="none" opacity=".6"/>
           </g>
         </defs>
 
-        <!-- stems -->
-        <g stroke="#6e5a3e" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".92">
-          <path d="M72 200 C66 152 58 112 56 64"/>
-          <path d="M72 200 C86 154 98 116 100 86"/>
-          <path d="M72 200 C56 158 44 122 40 96"/>
+        <!-- arching stems -->
+        <g stroke="url(#orcStem)" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".95">
+          <path d="M72 200 C70 160 60 120 52 78"/>
+          <path d="M76 200 C84 158 96 120 104 78"/>
+          <path d="M72 198 C58 168 44 138 36 108"/>
         </g>
-        <!-- dried leaves -->
-        <g fill="url(#leafG)" stroke="#3f3b22" stroke-width=".5" opacity=".95">
-          <path d="M56 122 C42 114 33 120 31 132 C44 135 54 130 56 122 Z"/>
-          <path d="M52 122 C50 134 54 142 58 146" stroke="#3f3b22" stroke-width=".7" fill="none"/>
-          <path d="M88 118 C102 110 111 116 113 128 C100 131 90 126 88 118 Z"/>
-          <path d="M50 156 C38 150 30 156 29 166 C40 168 48 163 50 156 Z"/>
+        <!-- waxy orchid leaves at base -->
+        <g fill="url(#orcLeaf)" stroke="#1f2814" stroke-width=".5" opacity=".94">
+          <path d="M68 198 Q40 188 26 168 Q40 162 58 178 Q66 188 68 198 Z"/>
+          <path d="M76 198 Q104 188 118 168 Q104 162 86 178 Q78 188 76 198 Z"/>
+          <path d="M72 200 Q72 178 64 158 Q60 175 68 195 Z" opacity=".8"/>
         </g>
-        <!-- bud -->
-        <g transform="translate(40 92) scale(.95)">
-          <path d="M0 7 C -8 2 -8 -12 0 -16 C 8 -12 8 2 0 7 Z" fill="url(#roseG)" stroke="#4f2e31" stroke-width=".5"/>
-          <path d="M-6 6 C -9 13 -4 16 0 13 M6 6 C 9 13 4 16 0 13 M0 8 v9" stroke="#6e5a3e" stroke-width="1.6" fill="none"/>
+        <!-- ribbon at base -->
+        <g>
+          <path d="M62 196 Q72 192 84 196 Q84 204 72 206 Q60 204 62 196 Z" fill="#a37e3e" stroke="#5a4220" stroke-width=".5"/>
+          <path d="M65 200 Q72 198 80 200" stroke="#5a4220" stroke-width=".5" fill="none" opacity=".7"/>
         </g>
-        <!-- rose heads -->
-        <use href="#rose" transform="translate(56 50) scale(1.25)"/>
-        <use href="#rose" transform="translate(100 80) scale(1) rotate(18)"/>
+        <!-- bud on side stem -->
+        <use href="#orcBud" transform="translate(38 110) rotate(-12)"/>
+        <use href="#orcBud" transform="translate(46 86) rotate(8) scale(.9)"/>
+        <!-- orchid blooms along stems -->
+        <use href="#orchid" transform="translate(52 78) scale(1.45) rotate(-8)"/>
+        <use href="#orchid" transform="translate(104 78) scale(1.4) rotate(12)"/>
+        <use href="#orchid" transform="translate(78 56) scale(1.55) rotate(2)"/>
+        <use href="#orchid" transform="translate(36 108) scale(1.05) rotate(-22)"/>
+        <use href="#orchid" transform="translate(118 104) scale(1.1) rotate(20)"/>
       </svg>
 
       <!-- pen (black + gold) -->
